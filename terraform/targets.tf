@@ -76,7 +76,7 @@ resource "aws_security_group" "targets" {
 ################################################################################
 # Target machines themselves.
 
-resource "aws_instance" "ubuntu-server-16-04" {
+resource "aws_instance" "targets-ubuntu-server-16-04" {
   instance_type = "t2.micro"
   ami           = "ami-7b2e086d"
 
