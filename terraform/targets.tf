@@ -80,7 +80,7 @@ resource "aws_instance" "targets-ubuntu-server-16-04" {
   instance_type = "t2.micro"
   ami           = "ami-7b2e086d"
 
-  key_name = "ccase"
+  key_name = "${aws_key_pair.user.key_name}"
 
   vpc_security_group_ids = [
     "${aws_security_group.targets.id}",

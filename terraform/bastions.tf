@@ -119,7 +119,7 @@ resource "aws_instance" "bastions-ubuntu-server-16-04" {
   instance_type = "t2.micro"
   ami           = "ami-7b2e086d"
 
-  key_name = "ccase"
+  key_name = "${aws_key_pair.user.key_name}"
 
   associate_public_ip_address = true
 

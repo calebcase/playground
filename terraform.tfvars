@@ -10,11 +10,15 @@ terragrunt = {
 
       arguments = [
         "-var",
-        "aws_region=${get_env("AWS_REGION", "us-east-1")}",
-        "-var",
         "uuid=${get_env("UUID", "7cd948b5-c58c-498a-a934-48040609d7ea")}",
         "-var",
         "env=${get_env("ENV", "training")}",
+        "-var",
+        "aws_region=${get_env("AWS_REGION", "us-east-1")}",
+        "-var",
+        "ssh_key=${get_env("SSH_KEY", "")}",
+        "-var",
+        "ssh_key_pair=${get_env("SSH_KEY_PAIR", "")}",
       ]
     }
 

@@ -1,9 +1,11 @@
 SHELL := /bin/bash
 
-AWS_REGION ?= us-east-1
-
 UUID ?= $(shell cat uuid || uuidgen | tee uuid)
 ENV ?= training
+
+AWS_REGION ?= us-east-1
+SSH_KEY ?= $(shell ssh-add -L | head -n 1)
+SSH_KEY_PAIR ?= $(USER)
 
 export
 
@@ -13,13 +15,17 @@ terragrunt_flags := --terragrunt-non-interactive --terragrunt-source-update
 all: plan
 
 .PHONY: plan
-plan: uuid
+plan:
 	@cd "$(ENV)" && terragrunt plan $(terragrunt_flags)
 
 .PHONY: apply
-apply: uuid
+apply:
 	@cd "$(ENV)" && terragrunt apply $(terragrunt_flags)
 
 .PHONY: destroy
-destroy: uuid
+destroy:
 	@cd "$(ENV)" && terragrunt destroy $(terragrunt_flags)
+
+.PHONY: import
+import:
+	@cd "$(ENV)" && terragrunt import $(terragrunt_flags) $(IMPORT_NAME) $(IMPORT_ID)
