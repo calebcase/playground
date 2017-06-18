@@ -8,7 +8,7 @@ resource "aws_vpc" "bastions" {
   enable_dns_hostnames             = true
 
   tags = {
-    Name = "bastions"
+    Name = "${var.uuid}-${var.env}-bastions"
   }
 }
 
@@ -18,7 +18,7 @@ resource "aws_subnet" "bastions" {
   cidr_block = "10.6.0.0/24"
 
   tags = {
-    Name = "bastions"
+    Name = "${var.uuid}-${var.env}-bastions"
   }
 }
 
@@ -45,7 +45,7 @@ resource "aws_route" "bastions-internet" {
 
 # Bastions security group.
 resource "aws_security_group" "bastions" {
-  name   = "bastions"
+  name   = "${var.uuid}-${var.env}-bastions"
   vpc_id = "${aws_vpc.bastions.id}"
 
   # SSH in from the internet and itself.
@@ -81,7 +81,7 @@ resource "aws_vpc_peering_connection" "bastions-targets" {
   auto_accept = true
 
   tags {
-    Name = "bastions"
+    Name = "${var.uuid}-${var.env}-bastions"
   }
 
   depends_on = [
@@ -117,7 +117,7 @@ resource "aws_route" "targets-bastions" {
 
 resource "aws_instance" "bastions-ubuntu-server-16-04" {
   instance_type = "t2.micro"
-  ami           = "ami-7b2e086d"
+  ami           = "${data.aws_ami.ubuntu-server-16-04.id}"
 
   key_name = "${aws_key_pair.user.key_name}"
 
@@ -130,6 +130,6 @@ resource "aws_instance" "bastions-ubuntu-server-16-04" {
   subnet_id = "${aws_subnet.bastions.id}"
 
   tags = {
-    Name = "bastions"
+    Name = "${var.uuid}-${var.env}-bastions"
   }
 }

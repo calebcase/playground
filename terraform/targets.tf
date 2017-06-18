@@ -8,7 +8,7 @@ resource "aws_vpc" "targets" {
   enable_dns_hostnames             = true
 
   tags = {
-    Name = "targets"
+    Name = "${var.uuid}-${var.env}-targets"
   }
 }
 
@@ -18,7 +18,7 @@ resource "aws_subnet" "targets" {
   cidr_block = "10.4.200.0/24"
 
   tags = {
-    Name = "targets"
+    Name = "${var.uuid}-${var.env}-targets"
   }
 }
 
@@ -45,7 +45,7 @@ resource "aws_route" "targets-internet" {
 
 # Targets security group.
 resource "aws_security_group" "targets" {
-  name   = "targets"
+  name   = "${var.uuid}-${var.env}-targets"
   vpc_id = "${aws_vpc.targets.id}"
 
   # SSH in from the internet and itself.
@@ -89,6 +89,6 @@ resource "aws_instance" "targets-ubuntu-server-16-04" {
   subnet_id = "${aws_subnet.targets.id}"
 
   tags = {
-    Name = "targets"
+    Name = "${var.uuid}-${var.env}-targets"
   }
 }

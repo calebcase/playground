@@ -1,4 +1,4 @@
-data "aws_ami" "ubuntu" {
+data "aws_ami" "ubuntu-server-16-04" {
   owners = [
     "099720109477",
   ]
