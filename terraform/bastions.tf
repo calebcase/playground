@@ -133,3 +133,22 @@ resource "aws_instance" "bastions-ubuntu-server-16-04" {
     Name = "${var.uuid}-${var.env}-bastions"
   }
 }
+
+resource "aws_instance" "bastions-kali" {
+  instance_type = "t2.micro"
+  ami           = "${data.aws_ami.kali.id}"
+
+  key_name = "${aws_key_pair.user.key_name}"
+
+  associate_public_ip_address = true
+
+  vpc_security_group_ids = [
+    "${aws_security_group.bastions.id}",
+  ]
+
+  subnet_id = "${aws_subnet.bastions.id}"
+
+  tags = {
+    Name = "${var.uuid}-${var.env}-bastions"
+  }
+}

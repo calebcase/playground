@@ -17,3 +17,7 @@ variable "ssh_key" {
 variable "ssh_key_pair" {
   default = ""
 }
+
+variable "outbound_access" {
+  default = true
+}
